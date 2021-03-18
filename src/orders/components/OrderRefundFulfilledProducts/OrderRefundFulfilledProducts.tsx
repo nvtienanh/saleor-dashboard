@@ -9,7 +9,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { CSSProperties } from "@material-ui/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
@@ -17,6 +16,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { OrderRefundData_order_fulfillments } from "@saleor/orders/types/OrderRefundData";
+import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,7 +24,7 @@ import { OrderRefundFormData } from "../OrderRefundPage/form";
 
 const useStyles = makeStyles(
   theme => {
-    const inputPadding: CSSProperties = {
+    const inputPadding = {
       paddingBottom: theme.spacing(2),
       paddingTop: theme.spacing(2)
     };
@@ -83,7 +83,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
     onRefundedProductQuantityChange,
     onSetMaximalQuantities
   } = props;
-  const classes = useStyles(props);
+  const classes = useStyles({});
   const intl = useIntl();
 
   return (
@@ -91,10 +91,15 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
       <CardTitle
         title={
           <>
-            {intl.formatMessage({
-              defaultMessage: "Fulfillment",
-              description: "section header"
-            })}
+            {fulfillment.status === FulfillmentStatus.RETURNED
+              ? intl.formatMessage({
+                  defaultMessage: "Fulfillment returned",
+                  description: "section header returned"
+                })
+              : intl.formatMessage({
+                  defaultMessage: "Fulfillment",
+                  description: "section header"
+                })}
             {fulfillment && (
               <Typography className={classes.orderNumber} variant="body1">
                 {`#${orderNumber}-${fulfillment?.fulfillmentOrder}`}

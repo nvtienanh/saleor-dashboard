@@ -2,15 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
+import { PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ShippingMethodWithExcludedProductsFragment
 // ====================================================
 
-export interface ShippingMethodWithExcludedProductsFragment_zipCodeRules {
-  __typename: "ShippingMethodZipCodeRule";
+export interface ShippingMethodWithExcludedProductsFragment_postalCodeRules {
+  __typename: "ShippingMethodPostalCodeRule";
   id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
   start: string | null;
   end: string | null;
 }
@@ -107,11 +108,13 @@ export interface ShippingMethodWithExcludedProductsFragment_excludedProducts {
 export interface ShippingMethodWithExcludedProductsFragment {
   __typename: "ShippingMethod";
   id: string;
-  zipCodeRules: (ShippingMethodWithExcludedProductsFragment_zipCodeRules | null)[] | null;
+  postalCodeRules: (ShippingMethodWithExcludedProductsFragment_postalCodeRules | null)[] | null;
   metadata: (ShippingMethodWithExcludedProductsFragment_metadata | null)[];
   privateMetadata: (ShippingMethodWithExcludedProductsFragment_privateMetadata | null)[];
   minimumOrderWeight: ShippingMethodWithExcludedProductsFragment_minimumOrderWeight | null;
   maximumOrderWeight: ShippingMethodWithExcludedProductsFragment_maximumOrderWeight | null;
+  minimumDeliveryDays: number | null;
+  maximumDeliveryDays: number | null;
   name: string;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodWithExcludedProductsFragment_channelListings[] | null;

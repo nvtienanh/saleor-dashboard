@@ -16,7 +16,6 @@ function loadStories() {
   require("./stories/components/AutocompleteSelectMenu");
   require("./stories/components/CardMenu");
   require("./stories/components/Checkbox");
-  require("./stories/components/Chip");
   require("./stories/components/ColumnPicker");
   require("./stories/components/Date");
   require("./stories/components/DateTime");
@@ -44,10 +43,6 @@ function loadStories() {
   require("./stories/components/Weight");
   require("./stories/components/WeightRange");
   require("./stories/components/messages");
-
-  // Authentication
-  require("./stories/auth/LoginPage");
-  require("./stories/auth/LoginLoading");
 
   // Attributes
   require("./stories/attributes/AttributeBulkDeleteDialog");
@@ -120,7 +115,7 @@ function loadStories() {
   require("./stories/orders/OrderDetailsPage");
   require("./stories/orders/OrderDraftCancelDialog");
   require("./stories/orders/OrderDraftListPage");
-  require("./stories/orders/OrderDraftPage");
+  require("./stories/orders/OrderDraftPage/OrderDraftPage");
   require("./stories/orders/OrderFulfillmentCancelDialog");
   require("./stories/orders/OrderFulfillmentDialog");
   require("./stories/orders/OrderFulfillmentTrackingDialog");

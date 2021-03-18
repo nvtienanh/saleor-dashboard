@@ -70,6 +70,11 @@ export enum AppTypeEnum {
   THIRDPARTY = "THIRDPARTY",
 }
 
+export enum AttributeEntityTypeEnum {
+  PAGE = "PAGE",
+  PRODUCT = "PRODUCT",
+}
+
 export enum AttributeErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
@@ -83,6 +88,7 @@ export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
+  REFERENCE = "REFERENCE",
 }
 
 export enum AttributeSortField {
@@ -446,6 +452,9 @@ export enum FulfillmentStatus {
   CANCELED = "CANCELED",
   FULFILLED = "FULFILLED",
   REFUNDED = "REFUNDED",
+  REFUNDED_AND_RETURNED = "REFUNDED_AND_RETURNED",
+  REPLACED = "REPLACED",
+  RETURNED = "RETURNED",
 }
 
 export enum InvoiceErrorCode {
@@ -553,13 +562,18 @@ export enum OrderDirection {
   DESC = "DESC",
 }
 
+export enum OrderDiscountType {
+  MANUAL = "MANUAL",
+  VOUCHER = "VOUCHER",
+}
+
 export enum OrderErrorCode {
   BILLING_ADDRESS_NOT_SET = "BILLING_ADDRESS_NOT_SET",
   CANNOT_CANCEL_FULFILLMENT = "CANNOT_CANCEL_FULFILLMENT",
   CANNOT_CANCEL_ORDER = "CANNOT_CANCEL_ORDER",
   CANNOT_DELETE = "CANNOT_DELETE",
+  CANNOT_DISCOUNT = "CANNOT_DISCOUNT",
   CANNOT_REFUND = "CANNOT_REFUND",
-  CANNOT_REFUND_FULFILLMENT_LINE = "CANNOT_REFUND_FULFILLMENT_LINE",
   CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
   CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
@@ -567,7 +581,7 @@ export enum OrderErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
   INVALID = "INVALID",
-  INVALID_REFUND_QUANTITY = "INVALID_REFUND_QUANTITY",
+  INVALID_QUANTITY = "INVALID_QUANTITY",
   NOT_AVAILABLE_IN_CHANNEL = "NOT_AVAILABLE_IN_CHANNEL",
   NOT_EDITABLE = "NOT_EDITABLE",
   NOT_FOUND = "NOT_FOUND",
@@ -602,20 +616,30 @@ export enum OrderEventsEnum {
   CONFIRMED = "CONFIRMED",
   DRAFT_ADDED_PRODUCTS = "DRAFT_ADDED_PRODUCTS",
   DRAFT_CREATED = "DRAFT_CREATED",
+  DRAFT_CREATED_FROM_REPLACE = "DRAFT_CREATED_FROM_REPLACE",
   DRAFT_REMOVED_PRODUCTS = "DRAFT_REMOVED_PRODUCTS",
   EMAIL_SENT = "EMAIL_SENT",
   EXTERNAL_SERVICE_NOTIFICATION = "EXTERNAL_SERVICE_NOTIFICATION",
   FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_FULFILLED_ITEMS = "FULFILLMENT_FULFILLED_ITEMS",
   FULFILLMENT_REFUNDED = "FULFILLMENT_REFUNDED",
+  FULFILLMENT_REPLACED = "FULFILLMENT_REPLACED",
   FULFILLMENT_RESTOCKED_ITEMS = "FULFILLMENT_RESTOCKED_ITEMS",
+  FULFILLMENT_RETURNED = "FULFILLMENT_RETURNED",
   INVOICE_GENERATED = "INVOICE_GENERATED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
   INVOICE_SENT = "INVOICE_SENT",
   INVOICE_UPDATED = "INVOICE_UPDATED",
   NOTE_ADDED = "NOTE_ADDED",
+  ORDER_DISCOUNT_ADDED = "ORDER_DISCOUNT_ADDED",
+  ORDER_DISCOUNT_AUTOMATICALLY_UPDATED = "ORDER_DISCOUNT_AUTOMATICALLY_UPDATED",
+  ORDER_DISCOUNT_DELETED = "ORDER_DISCOUNT_DELETED",
+  ORDER_DISCOUNT_UPDATED = "ORDER_DISCOUNT_UPDATED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
+  ORDER_LINE_DISCOUNT_REMOVED = "ORDER_LINE_DISCOUNT_REMOVED",
+  ORDER_LINE_DISCOUNT_UPDATED = "ORDER_LINE_DISCOUNT_UPDATED",
   ORDER_MARKED_AS_PAID = "ORDER_MARKED_AS_PAID",
+  ORDER_REPLACEMENT_CREATED = "ORDER_REPLACEMENT_CREATED",
   OTHER = "OTHER",
   OVERSOLD_ITEMS = "OVERSOLD_ITEMS",
   PAYMENT_AUTHORIZED = "PAYMENT_AUTHORIZED",
@@ -646,6 +670,8 @@ export enum OrderStatus {
   DRAFT = "DRAFT",
   FULFILLED = "FULFILLED",
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
+  PARTIALLY_RETURNED = "PARTIALLY_RETURNED",
+  RETURNED = "RETURNED",
   UNCONFIRMED = "UNCONFIRMED",
   UNFULFILLED = "UNFULFILLED",
 }
@@ -743,6 +769,11 @@ export enum PluginSortField {
   NAME = "NAME",
 }
 
+export enum PostalCodeRuleInclusionTypeEnum {
+  EXCLUDE = "EXCLUDE",
+  INCLUDE = "INCLUDE",
+}
+
 export enum ProductAttributeType {
   PRODUCT = "PRODUCT",
   VARIANT = "VARIANT",
@@ -790,6 +821,7 @@ export enum ProductOrderField {
   PRICE = "PRICE",
   PUBLICATION_DATE = "PUBLICATION_DATE",
   PUBLISHED = "PUBLISHED",
+  RANK = "RANK",
   RATING = "RATING",
   TYPE = "TYPE",
 }
@@ -953,9 +985,9 @@ export enum WebhookErrorCode {
 export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
-  CHECKOUT_QUANTITY_CHANGED = "CHECKOUT_QUANTITY_CHANGED",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
+  CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
   FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
@@ -966,8 +998,15 @@ export enum WebhookEventTypeEnum {
   ORDER_FULFILLED = "ORDER_FULFILLED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_UPDATED = "ORDER_UPDATED",
+  PAGE_CREATED = "PAGE_CREATED",
+  PAGE_DELETED = "PAGE_DELETED",
+  PAGE_UPDATED = "PAGE_UPDATED",
   PRODUCT_CREATED = "PRODUCT_CREATED",
+  PRODUCT_DELETED = "PRODUCT_DELETED",
   PRODUCT_UPDATED = "PRODUCT_UPDATED",
+  PRODUCT_VARIANT_CREATED = "PRODUCT_VARIANT_CREATED",
+  PRODUCT_VARIANT_DELETED = "PRODUCT_VARIANT_DELETED",
+  PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
 }
 
 export enum WeightUnitsEnum {
@@ -1022,6 +1061,7 @@ export interface AppTokenInput {
 
 export interface AttributeCreateInput {
   inputType?: AttributeInputTypeEnum | null;
+  entityType?: AttributeEntityTypeEnum | null;
   name: string;
   slug?: string | null;
   type: AttributeTypeEnum;
@@ -1084,6 +1124,7 @@ export interface AttributeValueInput {
   values?: (string | null)[] | null;
   file?: string | null;
   contentType?: string | null;
+  references?: string[] | null;
 }
 
 export interface BulkAttributeValueInput {
@@ -1103,8 +1144,7 @@ export interface CategoryFilterInput {
 }
 
 export interface CategoryInput {
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   name?: string | null;
   slug?: string | null;
   seo?: SeoInput | null;
@@ -1144,8 +1184,7 @@ export interface CollectionCreateInput {
   isPublished?: boolean | null;
   name?: string | null;
   slug?: string | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   backgroundImage?: any | null;
   backgroundImageAlt?: string | null;
   seo?: SeoInput | null;
@@ -1164,8 +1203,7 @@ export interface CollectionInput {
   isPublished?: boolean | null;
   name?: string | null;
   slug?: string | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   backgroundImage?: any | null;
   backgroundImageAlt?: string | null;
   seo?: SeoInput | null;
@@ -1314,10 +1352,17 @@ export interface OrderAddNoteInput {
   message: string;
 }
 
+export interface OrderDiscountCommonInput {
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason?: string | null;
+}
+
 export interface OrderDraftFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
+  channels?: (string | null)[] | null;
 }
 
 export interface OrderFilterInput {
@@ -1326,6 +1371,7 @@ export interface OrderFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
+  channels?: (string | null)[] | null;
 }
 
 export interface OrderFulfillInput {
@@ -1369,6 +1415,26 @@ export interface OrderRefundProductsInput {
   includeShippingCosts?: boolean | null;
 }
 
+export interface OrderReturnFulfillmentLineInput {
+  fulfillmentLineId: string;
+  quantity: number;
+  replace?: boolean | null;
+}
+
+export interface OrderReturnLineInput {
+  orderLineId: string;
+  quantity: number;
+  replace?: boolean | null;
+}
+
+export interface OrderReturnProductsInput {
+  orderLines?: OrderReturnLineInput[] | null;
+  fulfillmentLines?: OrderReturnFulfillmentLineInput[] | null;
+  amountToRefund?: any | null;
+  includeShippingCosts?: boolean | null;
+  refund?: boolean | null;
+}
+
 export interface OrderSettingsUpdateInput {
   automaticallyConfirmAllNewOrders: boolean;
 }
@@ -1391,8 +1457,7 @@ export interface OrderUpdateShippingInput {
 export interface PageCreateInput {
   slug?: string | null;
   title?: string | null;
-  content?: string | null;
-  contentJson?: any | null;
+  content?: any | null;
   attributes?: AttributeValueInput[] | null;
   isPublished?: boolean | null;
   publicationDate?: string | null;
@@ -1403,8 +1468,7 @@ export interface PageCreateInput {
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
-  content?: string | null;
-  contentJson?: any | null;
+  content?: any | null;
   attributes?: AttributeValueInput[] | null;
   isPublished?: boolean | null;
   publicationDate?: string | null;
@@ -1420,8 +1484,7 @@ export interface PageTranslationInput {
   seoTitle?: string | null;
   seoDescription?: string | null;
   title?: string | null;
-  content?: string | null;
-  contentJson?: any | null;
+  content?: any | null;
 }
 
 export interface PageTypeCreateInput {
@@ -1513,8 +1576,7 @@ export interface ProductCreateInput {
   category?: string | null;
   chargeTaxes?: boolean | null;
   collections?: (string | null)[] | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   name?: string | null;
   slug?: string | null;
   taxCode?: string | null;
@@ -1546,8 +1608,7 @@ export interface ProductInput {
   category?: string | null;
   chargeTaxes?: boolean | null;
   collections?: (string | null)[] | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   name?: string | null;
   slug?: string | null;
   taxCode?: string | null;
@@ -1685,6 +1746,11 @@ export interface ShippingMethodChannelListingInput {
   removeChannels?: string[] | null;
 }
 
+export interface ShippingPostalCodeRulesCreateInputRange {
+  start: string;
+  end?: string | null;
+}
+
 export interface ShippingPriceExcludeProductsInput {
   products: (string | null)[];
 }
@@ -1697,15 +1763,9 @@ export interface ShippingPriceInput {
   minimumDeliveryDays?: number | null;
   type?: ShippingMethodTypeEnum | null;
   shippingZone?: string | null;
-}
-
-export interface ShippingZipCodeRulesCreateInput {
-  zipCodeRules: (ShippingZipCodeRulesCreateInputRange | null)[];
-}
-
-export interface ShippingZipCodeRulesCreateInputRange {
-  start: string;
-  end?: string | null;
+  addPostalCodeRules?: ShippingPostalCodeRulesCreateInputRange[] | null;
+  deletePostalCodeRules?: string[] | null;
+  inclusionType?: PostalCodeRuleInclusionTypeEnum | null;
 }
 
 export interface ShippingZoneCreateInput {
@@ -1780,8 +1840,7 @@ export interface TranslationInput {
   seoTitle?: string | null;
   seoDescription?: string | null;
   name?: string | null;
-  description?: string | null;
-  descriptionJson?: any | null;
+  description?: any | null;
 }
 
 export interface UserCreateInput {

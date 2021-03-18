@@ -54,6 +54,7 @@ import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
+import errorTracker from "./services/errorTracking";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
@@ -66,6 +67,8 @@ import { warehouseSection } from "./warehouses/urls";
 if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
+
+errorTracker.init();
 
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
@@ -142,23 +145,34 @@ const Routes: React.FC = () => {
   } = useAuth();
   const { channel } = useAppChannel(false);
 
+  const channelLoaded = typeof channel !== "undefined";
+
+  const homePageLoaded =
+    channelLoaded &&
+    isAuthenticated &&
+    !tokenAuthLoading &&
+    !tokenVerifyLoading;
+
+  const homePageLoading =
+    (isAuthenticated && !channelLoaded) || (hasToken && tokenVerifyLoading);
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
-      {channel &&
-      isAuthenticated &&
-      !tokenAuthLoading &&
-      !tokenVerifyLoading ? (
+      {homePageLoaded ? (
         <AppLayout>
           <ErrorBoundary
-            onError={() =>
+            onError={e => {
+              const errorId = errorTracker.captureException(e);
+
               dispatchAppState({
                 payload: {
-                  error: "unhandled"
+                  error: "unhandled",
+                  errorId
                 },
                 type: "displayError"
-              })
-            }
+              });
+            }}
           >
             <Switch>
               <SectionRoute exact path="/" component={HomePage} />
@@ -284,7 +298,7 @@ const Routes: React.FC = () => {
             </Switch>
           </ErrorBoundary>
         </AppLayout>
-      ) : (isAuthenticated && !channel) || (hasToken && tokenVerifyLoading) ? (
+      ) : homePageLoading ? (
         <LoginLoading />
       ) : (
         <Auth />

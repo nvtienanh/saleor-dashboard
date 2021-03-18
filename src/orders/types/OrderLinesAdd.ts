@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderLineCreateInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderLineCreateInput, OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLinesAdd
@@ -48,10 +48,80 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderLinesAdd_draftOrderLinesCreate_order_discounts_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_discounts {
+  __typename: "OrderDiscount";
+  id: string;
+  type: OrderDiscountType;
+  calculationMode: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderLinesAdd_draftOrderLinesCreate_order_discounts_amount;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_events_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_events_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_events_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderLinesAdd_draftOrderLinesCreate_order_events_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderLinesAdd_draftOrderLinesCreate_order_events_discount_oldAmount | null;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_events_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderLinesAdd_draftOrderLinesCreate_order_events_user {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderLinesAdd_draftOrderLinesCreate_order_events_lines_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderLinesAdd_draftOrderLinesCreate_order_events_lines_discount_oldAmount | null;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines_orderLine {
@@ -64,6 +134,8 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines_orderLin
 export interface OrderLinesAdd_draftOrderLinesCreate_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
+  discount: OrderLinesAdd_draftOrderLinesCreate_order_events_lines_discount | null;
   orderLine: OrderLinesAdd_draftOrderLinesCreate_order_events_lines_orderLine | null;
 }
 
@@ -76,6 +148,8 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  discount: OrderLinesAdd_draftOrderLinesCreate_order_events_discount | null;
+  relatedOrder: OrderLinesAdd_draftOrderLinesCreate_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;
@@ -88,6 +162,31 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_or
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_gross;
+  net: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice_net;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice_gross {
@@ -122,7 +221,12 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_or
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice | null;
+  unitDiscount: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: DiscountValueTypeEnum | null;
+  undiscountedUnitPrice: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_undiscountedUnitPrice;
+  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderLinesAdd_draftOrderLinesCreate_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
@@ -153,6 +257,31 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_unitDiscount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice {
+  __typename: "TaxedMoney";
+  currency: string;
+  gross: OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice_gross;
+  net: OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice_net;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice_gross {
@@ -187,7 +316,12 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice | null;
+  unitDiscount: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitDiscount;
+  unitDiscountValue: any;
+  unitDiscountReason: string | null;
+  unitDiscountType: DiscountValueTypeEnum | null;
+  undiscountedUnitPrice: OrderLinesAdd_draftOrderLinesCreate_order_lines_undiscountedUnitPrice;
+  unitPrice: OrderLinesAdd_draftOrderLinesCreate_order_lines_unitPrice;
   thumbnail: OrderLinesAdd_draftOrderLinesCreate_order_lines_thumbnail | null;
 }
 
@@ -235,12 +369,25 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_subtotal_gross {
   currency: string;
 }
 
+export interface OrderLinesAdd_draftOrderLinesCreate_order_subtotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderLinesAdd_draftOrderLinesCreate_order_subtotal {
   __typename: "TaxedMoney";
   gross: OrderLinesAdd_draftOrderLinesCreate_order_subtotal_gross;
+  net: OrderLinesAdd_draftOrderLinesCreate_order_subtotal_net;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_total_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_total_net {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -255,6 +402,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_total_tax {
 export interface OrderLinesAdd_draftOrderLinesCreate_order_total {
   __typename: "TaxedMoney";
   gross: OrderLinesAdd_draftOrderLinesCreate_order_total_gross;
+  net: OrderLinesAdd_draftOrderLinesCreate_order_total_net;
   tax: OrderLinesAdd_draftOrderLinesCreate_order_total_tax;
 }
 
@@ -268,6 +416,24 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_totalCaptured {
   __typename: "Money";
   amount: number;
   currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal {
+  __typename: "TaxedMoney";
+  net: OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal_net;
+  gross: OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal_gross;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate_order_user {
@@ -318,31 +484,34 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order {
   metadata: (OrderLinesAdd_draftOrderLinesCreate_order_metadata | null)[];
   privateMetadata: (OrderLinesAdd_draftOrderLinesCreate_order_privateMetadata | null)[];
   billingAddress: OrderLinesAdd_draftOrderLinesCreate_order_billingAddress | null;
+  isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
   customerNote: string;
+  discounts: OrderLinesAdd_draftOrderLinesCreate_order_discounts[] | null;
   events: (OrderLinesAdd_draftOrderLinesCreate_order_events | null)[] | null;
   fulfillments: (OrderLinesAdd_draftOrderLinesCreate_order_fulfillments | null)[];
   lines: (OrderLinesAdd_draftOrderLinesCreate_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum | null;
+  paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderLinesAdd_draftOrderLinesCreate_order_shippingAddress | null;
   shippingMethod: OrderLinesAdd_draftOrderLinesCreate_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: OrderLinesAdd_draftOrderLinesCreate_order_shippingPrice | null;
+  shippingPrice: OrderLinesAdd_draftOrderLinesCreate_order_shippingPrice;
   status: OrderStatus;
-  subtotal: OrderLinesAdd_draftOrderLinesCreate_order_subtotal | null;
-  total: OrderLinesAdd_draftOrderLinesCreate_order_total | null;
+  subtotal: OrderLinesAdd_draftOrderLinesCreate_order_subtotal;
+  total: OrderLinesAdd_draftOrderLinesCreate_order_total;
   actions: (OrderAction | null)[];
-  totalAuthorized: OrderLinesAdd_draftOrderLinesCreate_order_totalAuthorized | null;
-  totalCaptured: OrderLinesAdd_draftOrderLinesCreate_order_totalCaptured | null;
+  totalAuthorized: OrderLinesAdd_draftOrderLinesCreate_order_totalAuthorized;
+  totalCaptured: OrderLinesAdd_draftOrderLinesCreate_order_totalCaptured;
+  undiscountedTotal: OrderLinesAdd_draftOrderLinesCreate_order_undiscountedTotal;
   user: OrderLinesAdd_draftOrderLinesCreate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods | null)[] | null;
   discount: OrderLinesAdd_draftOrderLinesCreate_order_discount | null;
   invoices: (OrderLinesAdd_draftOrderLinesCreate_order_invoices | null)[] | null;
   channel: OrderLinesAdd_draftOrderLinesCreate_order_channel;
-  isPaid: boolean | null;
+  isPaid: boolean;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate {

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderAddNoteInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum } from "./../../types/globalTypes";
+import { OrderAddNoteInput, OrderErrorCode, OrderEventsEmailsEnum, DiscountValueTypeEnum, OrderEventsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderAddNote
@@ -14,10 +14,64 @@ export interface OrderAddNote_orderAddNote_errors {
   field: string | null;
 }
 
+export interface OrderAddNote_orderAddNote_order_events_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderAddNote_orderAddNote_order_events_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderAddNote_orderAddNote_order_events_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderAddNote_orderAddNote_order_events_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderAddNote_orderAddNote_order_events_discount_oldAmount | null;
+}
+
+export interface OrderAddNote_orderAddNote_order_events_relatedOrder {
+  __typename: "Order";
+  id: string;
+  number: string | null;
+}
+
 export interface OrderAddNote_orderAddNote_order_events_user {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface OrderAddNote_orderAddNote_order_events_lines_discount_amount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderAddNote_orderAddNote_order_events_lines_discount_oldAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderAddNote_orderAddNote_order_events_lines_discount {
+  __typename: "OrderEventDiscountObject";
+  valueType: DiscountValueTypeEnum;
+  value: any;
+  reason: string | null;
+  amount: OrderAddNote_orderAddNote_order_events_lines_discount_amount | null;
+  oldValueType: DiscountValueTypeEnum | null;
+  oldValue: any | null;
+  oldAmount: OrderAddNote_orderAddNote_order_events_lines_discount_oldAmount | null;
 }
 
 export interface OrderAddNote_orderAddNote_order_events_lines_orderLine {
@@ -30,6 +84,8 @@ export interface OrderAddNote_orderAddNote_order_events_lines_orderLine {
 export interface OrderAddNote_orderAddNote_order_events_lines {
   __typename: "OrderEventOrderLineObject";
   quantity: number | null;
+  itemName: string | null;
+  discount: OrderAddNote_orderAddNote_order_events_lines_discount | null;
   orderLine: OrderAddNote_orderAddNote_order_events_lines_orderLine | null;
 }
 
@@ -42,6 +98,8 @@ export interface OrderAddNote_orderAddNote_order_events {
   email: string | null;
   emailType: OrderEventsEmailsEnum | null;
   invoiceNumber: string | null;
+  discount: OrderAddNote_orderAddNote_order_events_discount | null;
+  relatedOrder: OrderAddNote_orderAddNote_order_events_relatedOrder | null;
   message: string | null;
   quantity: number | null;
   transactionReference: string | null;

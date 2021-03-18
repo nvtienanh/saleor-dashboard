@@ -215,12 +215,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                               .includes("mac")}
                             onClick={() => setNavigatorVisibility(true)}
                           />
-                          <AppChannelSelect
-                            channels={availableChannels}
-                            disabled={!isPickerActive}
-                            selectedChannelId={channel.id}
-                            onChannelSelect={setChannel}
-                          />
+                          {channel && (
+                            <AppChannelSelect
+                              channels={availableChannels}
+                              disabled={!isPickerActive}
+                              selectedChannelId={channel.id}
+                              onChannelSelect={setChannel}
+                            />
+                          )}
                           <UserChip
                             isDarkThemeEnabled={isDark}
                             user={user}
@@ -237,8 +239,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 </div>
                 <main className={classes.view}>
                   {appState.error
-                    ? appState.error === "unhandled" && (
-                        <ErrorPage onBack={handleErrorBack} />
+                    ? appState.error.type === "unhandled" && (
+                        <ErrorPage
+                          id={appState.error.id}
+                          onBack={handleErrorBack}
+                        />
                       )
                     : children}
                 </main>

@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 
 import { fragmentAddress } from "./address";
 import { metadataFragment } from "./metadata";
+import { fragmentMoney } from "./products";
 
 export const fragmentOrderEvent = gql`
   fragment OrderEventFragment on OrderEvent {
@@ -12,6 +13,25 @@ export const fragmentOrderEvent = gql`
     email
     emailType
     invoiceNumber
+    discount {
+      valueType
+      value
+      reason
+      amount {
+        amount
+        currency
+      }
+      oldValueType
+      oldValue
+      oldAmount {
+        amount
+        currency
+      }
+    }
+    relatedOrder {
+      id
+      number
+    }
     message
     quantity
     transactionReference
@@ -19,9 +39,27 @@ export const fragmentOrderEvent = gql`
     user {
       id
       email
+      firstName
+      lastName
     }
     lines {
       quantity
+      itemName
+      discount {
+        valueType
+        value
+        reason
+        amount {
+          amount
+          currency
+        }
+        oldValueType
+        oldValue
+        oldAmount {
+          amount
+          currency
+        }
+      }
       orderLine {
         id
         productName
@@ -43,6 +81,24 @@ export const fragmentOrderLine = gql`
     productSku
     quantity
     quantityFulfilled
+    unitDiscount {
+      amount
+      currency
+    }
+    unitDiscountValue
+    unitDiscountReason
+    unitDiscountType
+    undiscountedUnitPrice {
+      currency
+      gross {
+        amount
+        currency
+      }
+      net {
+        amount
+        currency
+      }
+    }
     unitPrice {
       gross {
         amount
@@ -113,15 +169,27 @@ export const fragmentOrderDetails = gql`
   ${fulfillmentFragment}
   ${invoiceFragment}
   ${metadataFragment}
+  ${fragmentMoney}
   fragment OrderDetailsFragment on Order {
     id
     ...MetadataFragment
     billingAddress {
       ...AddressFragment
     }
+    isShippingRequired
     canFinalize
     created
     customerNote
+    discounts {
+      id
+      type
+      calculationMode: valueType
+      value
+      reason
+      amount {
+        ...Money
+      }
+    }
     events {
       ...OrderEventFragment
     }
@@ -149,28 +217,37 @@ export const fragmentOrderDetails = gql`
     status
     subtotal {
       gross {
-        amount
-        currency
+        ...Money
+      }
+      net {
+        ...Money
       }
     }
     total {
       gross {
-        amount
-        currency
+        ...Money
+      }
+      net {
+        ...Money
       }
       tax {
-        amount
-        currency
+        ...Money
       }
     }
     actions
     totalAuthorized {
-      amount
-      currency
+      ...Money
     }
     totalCaptured {
-      amount
-      currency
+      ...Money
+    }
+    undiscountedTotal {
+      net {
+        ...Money
+      }
+      gross {
+        ...Money
+      }
     }
     user {
       id
@@ -181,13 +258,11 @@ export const fragmentOrderDetails = gql`
       id
       name
       price {
-        amount
-        currency
+        ...Money
       }
     }
     discount {
-      amount
-      currency
+      ...Money
     }
     invoices {
       ...InvoiceFragment

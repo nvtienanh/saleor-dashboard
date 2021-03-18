@@ -10,28 +10,30 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import { ShippingMethodFragment_zipCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
+import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum
+} from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ShippingZoneZipCodes, {
-  ZipCodeInclusion
-} from "../ShippingZoneZipCodes";
+import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 
 export interface FormData {
   channelListings: ChannelShippingData[];
-  includeZipCodes: ZipCodeInclusion;
   name: string;
   noLimits: boolean;
   minValue: string;
   maxValue: string;
+  minDays: string;
+  maxDays: string;
   type: ShippingMethodTypeEnum;
 }
 
@@ -40,15 +42,18 @@ export interface ShippingZoneRatesCreatePageProps {
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
   hasChannelChanged?: boolean;
-  zipCodes?: ShippingMethodFragment_zipCodeRules[];
+  postalCodes?: ShippingMethodFragment_postalCodeRules[];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
-  onZipCodeAssign: () => void;
-  onZipCodeUnassign: (id: string) => void;
+  onPostalCodeInclusionChange: (
+    inclusion: PostalCodeRuleInclusionTypeEnum
+  ) => void;
+  onPostalCodeAssign: () => void;
+  onPostalCodeUnassign: (code: any) => void;
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   variant: ShippingMethodTypeEnum;
@@ -64,20 +69,22 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   onBack,
   onDelete,
   onSubmit,
+  onPostalCodeInclusionChange,
   onChannelsChange,
-  onZipCodeAssign,
-  onZipCodeUnassign,
+  onPostalCodeAssign,
+  onPostalCodeUnassign,
   openChannelsModal,
   saveButtonBarState,
   variant,
-  zipCodes
+  postalCodes
 }) => {
   const intl = useIntl();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: FormData = {
     channelListings: shippingChannels,
-    includeZipCodes: ZipCodeInclusion.Include,
+    maxDays: "",
     maxValue: "",
+    minDays: "",
     minValue: "",
     name: "",
     noLimits: false,
@@ -150,13 +157,12 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                   errors={channelErrors}
                 />
                 <CardSpacer />
-                <ShippingZoneZipCodes
-                  data={data}
+                <ShippingZonePostalCodes
                   disabled={disabled}
-                  onZipCodeDelete={onZipCodeUnassign}
-                  onZipCodeInclusionChange={() => undefined}
-                  onZipCodeRangeAdd={onZipCodeAssign}
-                  zipCodes={zipCodes}
+                  onPostalCodeDelete={onPostalCodeUnassign}
+                  onPostalCodeInclusionChange={onPostalCodeInclusionChange}
+                  onPostalCodeRangeAdd={onPostalCodeAssign}
+                  postalCodes={postalCodes}
                 />
               </div>
               <div>

@@ -4,6 +4,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import Skeleton from "@saleor/components/Skeleton";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -12,6 +13,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
+import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapNodeToChoice } from "@saleor/utils/maps";
@@ -187,7 +189,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         id,
         input: {
           backgroundImageAlt: formData.backgroundImageAlt,
-          descriptionJson: JSON.stringify(formData.description),
+          description: getParsedDataForJsonStringField(formData.description),
           name: formData.name,
           seo: {
             description: formData.seoDescription,
@@ -206,6 +208,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables })
   );
+
+  if (typeof channel === "undefined") {
+    return <Skeleton />;
+  }
 
   return (
     <>
@@ -256,7 +262,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           data.category.products.edges.map(edge => edge.node)
         )}
         saveButtonBarState={updateResult.status}
-        selectedChannelId={channel.id}
+        selectedChannelId={channel?.id}
         subcategories={maybe(() =>
           data.category.children.edges.map(edge => edge.node)
         )}

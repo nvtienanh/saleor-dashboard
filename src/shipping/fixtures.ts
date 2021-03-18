@@ -2,7 +2,11 @@ import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragme
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
 
-import { ShippingMethodTypeEnum, WeightUnitsEnum } from "../types/globalTypes";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeEnum,
+  WeightUnitsEnum
+} from "../types/globalTypes";
 
 export const shippingZones: ShippingZoneFragment[] = [
   {
@@ -1618,40 +1622,45 @@ export const shippingZone: ShippingZone_shippingZone = {
         }
       },
       id: "U2hpcHBpbmdNZXRob2Q6NA==",
+      maximumDeliveryDays: 10,
       maximumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 80
       },
       metadata: [],
+      minimumDeliveryDays: 0,
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "DB Schenker",
-      privateMetadata: [],
-      type: ShippingMethodTypeEnum.WEIGHT,
-      zipCodeRules: [
+      postalCodeRules: [
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
-      ]
+      ],
+      privateMetadata: [],
+      type: ShippingMethodTypeEnum.WEIGHT
     },
     {
       __typename: "ShippingMethod",
@@ -1681,36 +1690,41 @@ export const shippingZone: ShippingZone_shippingZone = {
         }
       },
       id: "U2hpcHBpbmdNZXRob2Q6Mw==",
+      maximumDeliveryDays: 10,
       maximumOrderWeight: null,
       metadata: [],
+      minimumDeliveryDays: 0,
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "Registred priority",
-      privateMetadata: [],
-      type: ShippingMethodTypeEnum.WEIGHT,
-      zipCodeRules: [
+      postalCodeRules: [
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
-      ]
+      ],
+      privateMetadata: [],
+      type: ShippingMethodTypeEnum.WEIGHT
     },
     {
       __typename: "ShippingMethod",
@@ -1740,36 +1754,41 @@ export const shippingZone: ShippingZone_shippingZone = {
         }
       },
       id: "U2hpcHBpbmdNZXRob2Q6Mg==",
+      maximumDeliveryDays: 10,
       maximumOrderWeight: null,
       metadata: [],
+      minimumDeliveryDays: 0,
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "UPS",
-      privateMetadata: [],
-      type: ShippingMethodTypeEnum.PRICE,
-      zipCodeRules: [
+      postalCodeRules: [
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
-      ]
+      ],
+      privateMetadata: [],
+      type: ShippingMethodTypeEnum.PRICE
     },
     {
       __typename: "ShippingMethod",
@@ -1786,36 +1805,41 @@ export const shippingZone: ShippingZone_shippingZone = {
         }
       },
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
+      maximumDeliveryDays: 10,
       maximumOrderWeight: null,
       metadata: [],
+      minimumDeliveryDays: 0,
       minimumOrderWeight: {
         __typename: "Weight",
         unit: WeightUnitsEnum.KG,
         value: 0
       },
       name: "DHL",
-      privateMetadata: [],
-      type: ShippingMethodTypeEnum.PRICE,
-      zipCodeRules: [
+      postalCodeRules: [
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-220",
           id: "1",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-210"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: "51-240",
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-235"
         },
         {
-          __typename: "ShippingMethodZipCodeRule",
+          __typename: "ShippingMethodPostalCodeRule",
           end: null,
           id: "2",
+          inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
           start: "51-274"
         }
-      ]
+      ],
+      privateMetadata: [],
+      type: ShippingMethodTypeEnum.PRICE
     }
   ],
   warehouses: [

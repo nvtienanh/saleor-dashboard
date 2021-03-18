@@ -53,12 +53,12 @@ const updateProductTranslations = gql`
       product {
         id
         name
-        descriptionJson
+        description
         seoDescription
         seoTitle
         translation(languageCode: $language) {
           id
-          descriptionJson
+          description
           language {
             code
             language
@@ -90,12 +90,12 @@ const updateCategoryTranslations = gql`
       category {
         id
         name
-        descriptionJson
+        description
         seoDescription
         seoTitle
         translation(languageCode: $language) {
           id
-          descriptionJson
+          description
           language {
             language
           }
@@ -107,6 +107,7 @@ const updateCategoryTranslations = gql`
     }
   }
 `;
+
 export const TypedUpdateCategoryTranslations = TypedMutation<
   UpdateCategoryTranslations,
   UpdateCategoryTranslationsVariables
@@ -126,12 +127,12 @@ const updateCollectionTranslations = gql`
       collection {
         id
         name
-        descriptionJson
+        description
         seoDescription
         seoTitle
         translation(languageCode: $language) {
           id
-          descriptionJson
+          description
           language {
             language
           }
@@ -143,6 +144,7 @@ const updateCollectionTranslations = gql`
     }
   }
 `;
+
 export const TypedUpdateCollectionTranslations = TypedMutation<
   UpdateCollectionTranslations,
   UpdateCollectionTranslationsVariables

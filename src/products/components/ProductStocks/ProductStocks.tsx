@@ -268,7 +268,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                     {stock.label}
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
-                    {stock.data.quantityAllocated}
+                    {stock.data?.quantityAllocated || 0}
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
                     <TextField
@@ -310,6 +310,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                   >
                     <div ref={anchor}>
                       <IconButton
+                        data-test-id="add-warehouse"
                         color="primary"
                         onClick={() => setExpansionState(!isExpanded)}
                       >

@@ -136,12 +136,20 @@ export const orderStatusMessages = defineMessages({
     defaultMessage: "Partially fulfilled",
     description: "order status"
   },
+  partiallyReturned: {
+    defaultMessage: "Partially returned",
+    description: "order status"
+  },
   readyToCapture: {
     defaultMessage: "Ready to capture",
     description: "order status"
   },
   readyToFulfill: {
     defaultMessage: "Ready to fulfill",
+    description: "order status"
+  },
+  returned: {
+    defaultMessage: "Returned",
     description: "order status"
   },
   unconfirmed: {
@@ -189,6 +197,16 @@ export const transformOrderStatus = (
         localized: intl.formatMessage(orderStatusMessages.unconfirmed),
         status: StatusType.NEUTRAL
       };
+    case OrderStatus.PARTIALLY_RETURNED:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.partiallyReturned),
+        status: StatusType.NEUTRAL
+      };
+    case OrderStatus.RETURNED:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.returned),
+        status: StatusType.NEUTRAL
+      };
   }
   return {
     localized: status,
@@ -227,7 +245,7 @@ export function only<T>(obj: T, key: keyof T): boolean {
   );
 }
 
-export function empty(obj: object): boolean {
+export function empty(obj: {}): boolean {
   return Object.keys(obj).every(key => obj[key] === undefined);
 }
 
@@ -358,10 +376,7 @@ export function generateCode(charNum: number) {
   return result;
 }
 
-export function findInEnum<TEnum extends object>(
-  needle: string,
-  haystack: TEnum
-) {
+export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   const match = Object.keys(haystack).find(key => key === needle);
   if (!!match) {
     return haystack[needle as keyof TEnum];
@@ -370,7 +385,7 @@ export function findInEnum<TEnum extends object>(
   throw new Error(`Key ${needle} not found in enum`);
 }
 
-export function findValueInEnum<TEnum extends object>(
+export function findValueInEnum<TEnum extends {}>(
   needle: string,
   haystack: TEnum
 ): TEnum[keyof TEnum] {
