@@ -1,34 +1,36 @@
 import { COLLECTION_SELECTORS } from "../elements/catalog/collection-selectors";
-import { ASSIGN_PRODUCTS_SELECTORS } from "../elements/catalog/products/assign-products-selectors";
-import { MENAGE_CHANNEL_AVAILABILITY_FORM } from "../elements/channels/menage-channel-availability-form";
+import { PRODUCT_DETAILS } from "../elements/catalog/products/product-details";
+import { AVAILABLE_CHANNELS_FORM } from "../elements/channels/available-channels-form";
+import { SELECT_CHANNELS_TO_ASSIGN } from "../elements/channels/select-channels-to-assign";
+import { ASSIGN_ELEMENTS_SELECTORS } from "../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 
 export function createCollection(collectionName, isPublished, channel) {
   const publishedSelector = isPublished
-    ? MENAGE_CHANNEL_AVAILABILITY_FORM.radioButtonsValueTrue
-    : MENAGE_CHANNEL_AVAILABILITY_FORM.radioButtonsValueFalse;
+    ? AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue
+    : AVAILABLE_CHANNELS_FORM.radioButtonsValueFalse;
 
   cy.get(COLLECTION_SELECTORS.createCollectionButton)
     .click()
     .get(COLLECTION_SELECTORS.nameInput)
     .type(collectionName)
-    .get(MENAGE_CHANNEL_AVAILABILITY_FORM.channelsMenageButton)
+    .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
     .click()
-    .get(MENAGE_CHANNEL_AVAILABILITY_FORM.allChannelsCheckbox)
+    .get(SELECT_CHANNELS_TO_ASSIGN.allChannelsCheckbox)
     .click();
-  cy.contains(MENAGE_CHANNEL_AVAILABILITY_FORM.channelRow, channel.name)
-    .find(MENAGE_CHANNEL_AVAILABILITY_FORM.channelCheckbox)
+  cy.contains(SELECT_CHANNELS_TO_ASSIGN.channelRow, channel.name)
+    .find(SELECT_CHANNELS_TO_ASSIGN.channelCheckbox)
     .click()
     .get(BUTTON_SELECTORS.submit)
     .click()
-    .get(MENAGE_CHANNEL_AVAILABILITY_FORM.channelsAvailabilityItem)
+    .get(AVAILABLE_CHANNELS_FORM.availableChannel)
     .click()
-    .get(
-      `${MENAGE_CHANNEL_AVAILABILITY_FORM.publishedCheckbox}${publishedSelector}`
-    )
+    .get(`${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${publishedSelector}`)
     .click();
   cy.addAliasToGraphRequest("CreateCollection");
   cy.get(COLLECTION_SELECTORS.saveButton).click();
+  cy.get(SHARED_ELEMENTS.confirmationMsg).should("be.visible");
   return cy
     .wait("@CreateCollection")
     .its("response.body.data.collectionCreate.collection");
@@ -36,12 +38,12 @@ export function createCollection(collectionName, isPublished, channel) {
 export function assignProductsToCollection(productName) {
   cy.get(COLLECTION_SELECTORS.addProductButton)
     .click()
-    .get(ASSIGN_PRODUCTS_SELECTORS.searchInput)
+    .get(ASSIGN_ELEMENTS_SELECTORS.searchInput)
     .type(productName);
-  cy.contains(ASSIGN_PRODUCTS_SELECTORS.tableRow, productName)
-    .find(ASSIGN_PRODUCTS_SELECTORS.checkbox)
+  cy.contains(ASSIGN_ELEMENTS_SELECTORS.tableRow, productName)
+    .find(ASSIGN_ELEMENTS_SELECTORS.checkbox)
     .click();
   cy.addAliasToGraphRequest("CollectionAssignProduct");
-  cy.get(ASSIGN_PRODUCTS_SELECTORS.submitButton).click();
+  cy.get(ASSIGN_ELEMENTS_SELECTORS.submitButton).click();
   cy.wait("@CollectionAssignProduct");
 }

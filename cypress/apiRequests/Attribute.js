@@ -10,7 +10,13 @@ export function createAttribute(name, attributeValues = ["value"]) {
       attribute{
         id
         name
-        values{name}
+        choices(first: 100){
+          edges{
+            node{
+              name
+            }
+          }
+        }
       }
       attributeErrors{
         field
@@ -18,7 +24,9 @@ export function createAttribute(name, attributeValues = ["value"]) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.attributeCreate.attribute");
 }
 
 export function getAttributes(first, search) {

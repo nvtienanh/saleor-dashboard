@@ -1,4 +1,9 @@
-export function createChannel(isActive, name, slug, currencyCode) {
+export function createChannel({
+  isActive = true,
+  name,
+  slug = name,
+  currencyCode = "PLN"
+}) {
   const createChannelMutation = `mutation{
     channelCreate(input: {
       isActive: ${isActive}
@@ -17,7 +22,9 @@ export function createChannel(isActive, name, slug, currencyCode) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(createChannelMutation);
+  return cy
+    .sendRequestWithQuery(createChannelMutation)
+    .its("body.data.channelCreate.channel");
 }
 export function getChannels() {
   const getChannelsInfoQuery = `query{
@@ -35,7 +42,7 @@ export function getChannels() {
 export function deleteChannel(channelId, targetChannelId) {
   const deleteChannelMutation = `mutation{
     channelDelete(id: "${channelId}", input:{
-      targetChannel: "${targetChannelId}"
+      channelId: "${targetChannelId}"
     }){
       channel{
         name
@@ -46,4 +53,16 @@ export function deleteChannel(channelId, targetChannelId) {
     }
   }`;
   return cy.sendRequestWithQuery(deleteChannelMutation);
+}
+
+export function activateChannel(channelId) {
+  const mutation = `mutation{
+    channelActivate(id:"${channelId}"){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
 }

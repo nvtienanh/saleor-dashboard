@@ -1,13 +1,14 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
+import {
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography
+} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
@@ -16,6 +17,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { renderCollection } from "@saleor/misc";
+import { makeStyles } from "@saleor/theme";
 import { PostalCodeRuleInclusionTypeEnum } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";

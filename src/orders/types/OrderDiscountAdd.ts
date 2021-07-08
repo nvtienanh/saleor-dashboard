@@ -1,8 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountCommonInput, OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDiscountAdd
@@ -12,6 +13,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+  addressType: AddressTypeEnum | null;
 }
 
 export interface OrderDiscountAdd_orderDiscountAdd_order_metadata {
@@ -455,12 +457,6 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethod
   price: OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods_price | null;
 }
 
-export interface OrderDiscountAdd_orderDiscountAdd_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderDiscountAdd_orderDiscountAdd_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -476,6 +472,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderDiscountAdd_orderDiscountAdd_order {
@@ -508,7 +505,6 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   user: OrderDiscountAdd_orderDiscountAdd_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods | null)[] | null;
-  discount: OrderDiscountAdd_orderDiscountAdd_order_discount | null;
   invoices: (OrderDiscountAdd_orderDiscountAdd_order_invoices | null)[] | null;
   channel: OrderDiscountAdd_orderDiscountAdd_order_channel;
   isPaid: boolean;

@@ -6,10 +6,15 @@ export function createShipping({ channelId, name, address, price = 1 }) {
   let shippingZone;
   let warehouse;
 
-  return createShippingZone(name, address.country)
+  return shippingMethodRequest
+    .createShippingZone(name, address.country, channelId)
     .then(shippingZoneResp => {
       shippingZone = shippingZoneResp;
-      createWarehouse(name, shippingZone.id, address);
+      warehouseRequest.createWarehouse({
+        name,
+        shippingZone: shippingZone.id,
+        address
+      });
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;
@@ -25,17 +30,6 @@ export function createShipping({ channelId, name, address, price = 1 }) {
     })
     .then(() => ({ shippingMethod, shippingZone, warehouse }));
 }
-
-export function createShippingZone(name, country) {
-  return shippingMethodRequest
-    .createShippingZone(name, country)
-    .its("body.data.shippingZoneCreate.shippingZone");
-}
-export function createWarehouse(name, shippingZoneId, address) {
-  return warehouseRequest
-    .createWarehouse(name, shippingZoneId, address)
-    .its("body.data.createWarehouse.warehouse");
-}
 export function createShippingRate(name, shippingZoneId) {
   return shippingMethodRequest
     .createShippingRate(name, shippingZoneId)
@@ -46,13 +40,11 @@ export function deleteShippingStartsWith(startsWith) {
   cy.deleteElementsStartsWith(
     shippingMethodRequest.deleteShippingZone,
     shippingMethodRequest.getShippingZones,
-    startsWith,
-    "shippingZONE"
+    startsWith
   );
   cy.deleteElementsStartsWith(
     warehouseRequest.deleteWarehouse,
     warehouseRequest.getWarehouses,
-    startsWith,
-    "Warehouse"
+    startsWith
   );
 }

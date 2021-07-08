@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
@@ -449,12 +450,6 @@ export interface OrderDetails_order_availableShippingMethods {
   price: OrderDetails_order_availableShippingMethods_price | null;
 }
 
-export interface OrderDetails_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderDetails_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -470,6 +465,7 @@ export interface OrderDetails_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderDetails_order {
@@ -502,7 +498,6 @@ export interface OrderDetails_order {
   user: OrderDetails_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDetails_order_availableShippingMethods | null)[] | null;
-  discount: OrderDetails_order_discount | null;
   invoices: (OrderDetails_order_invoices | null)[] | null;
   channel: OrderDetails_order_channel;
   isPaid: boolean;

@@ -1,8 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDraftFinalize
@@ -12,6 +13,7 @@ export interface OrderDraftFinalize_draftOrderComplete_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+  addressType: AddressTypeEnum | null;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete_order_metadata {
@@ -455,12 +457,6 @@ export interface OrderDraftFinalize_draftOrderComplete_order_availableShippingMe
   price: OrderDraftFinalize_draftOrderComplete_order_availableShippingMethods_price | null;
 }
 
-export interface OrderDraftFinalize_draftOrderComplete_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderDraftFinalize_draftOrderComplete_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -476,6 +472,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete_order {
@@ -508,7 +505,6 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   user: OrderDraftFinalize_draftOrderComplete_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDraftFinalize_draftOrderComplete_order_availableShippingMethods | null)[] | null;
-  discount: OrderDraftFinalize_draftOrderComplete_order_discount | null;
   invoices: (OrderDraftFinalize_draftOrderComplete_order_invoices | null)[] | null;
   channel: OrderDraftFinalize_draftOrderComplete_order_channel;
   isPaid: boolean;

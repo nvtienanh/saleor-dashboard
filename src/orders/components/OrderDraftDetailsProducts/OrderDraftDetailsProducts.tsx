@@ -1,14 +1,11 @@
-import { makeStyles } from "@material-ui/core/styles";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import { TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps
 } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

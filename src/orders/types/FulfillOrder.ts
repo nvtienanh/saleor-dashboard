@@ -1,8 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderFulfillInput, OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderFulfillInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: FulfillOrder
@@ -12,8 +13,9 @@ export interface FulfillOrder_orderFulfill_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+  addressType: AddressTypeEnum | null;
   warehouse: string | null;
-  orderLine: string | null;
+  orderLines: string[] | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_metadata {
@@ -457,12 +459,6 @@ export interface FulfillOrder_orderFulfill_order_availableShippingMethods {
   price: FulfillOrder_orderFulfill_order_availableShippingMethods_price | null;
 }
 
-export interface FulfillOrder_orderFulfill_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface FulfillOrder_orderFulfill_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -478,6 +474,7 @@ export interface FulfillOrder_orderFulfill_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface FulfillOrder_orderFulfill_order {
@@ -510,7 +507,6 @@ export interface FulfillOrder_orderFulfill_order {
   user: FulfillOrder_orderFulfill_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;
-  discount: FulfillOrder_orderFulfill_order_discount | null;
   invoices: (FulfillOrder_orderFulfill_order_invoices | null)[] | null;
   channel: FulfillOrder_orderFulfill_order_channel;
   isPaid: boolean;

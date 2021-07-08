@@ -1,7 +1,6 @@
-import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
-import { makeStyles } from "@material-ui/core/styles";
+import { Button, DialogActions } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

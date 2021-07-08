@@ -2,6 +2,7 @@ import "./user";
 import "./softAssertions";
 import "./deleteElement/index.js";
 import "./elements/index";
+import "cypress-mailhog";
 
 import { urlList } from "../url/urlList";
 
@@ -53,4 +54,11 @@ Cypress.Commands.add("sendRequestWithQuery", (query, authorization = "auth") =>
     method: "POST",
     url: urlList.apiUri
   })
+);
+Cypress.on(
+  "uncaught:exception",
+  (err, runnable) =>
+    // returning false here prevents Cypress from
+    // failing the test
+    false
 );

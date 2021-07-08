@@ -1,4 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -21,6 +21,7 @@ import {
 } from "@saleor/shipping/mutations";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -32,9 +33,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { findValueInEnum, getStringOrPlaceholder } from "../../../misc";
 import { CountryCode } from "../../../types/globalTypes";
-import ShippingZoneDetailsPage, {
-  FormData
-} from "../../components/ShippingZoneDetailsPage";
+import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
+import { FormData } from "../../components/ShippingZoneDetailsPage/types";
 import { useShippingZone } from "../../queries";
 import {
   shippingPriceRatesEditUrl,
@@ -73,7 +73,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     displayLoader: true,
     variables: { id, ...paginationState }
   });
-  const { channel } = useAppChannel();
+  const { availableChannels, channel } = useAppChannel();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZoneUrlDialog,
@@ -138,11 +138,18 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       submitData.warehouses
     );
 
+    const channelsDiff = diff(
+      data.shippingZone.channels.map(channel => channel.id),
+      submitData.channels
+    );
+
     const result = await updateShippingZone({
       variables: {
         id,
         input: {
           addWarehouses: warehouseDiff.added,
+          addChannels: channelsDiff.added,
+          removeChannels: channelsDiff.removed,
           description: submitData.description,
           name: submitData.name,
           removeWarehouses: warehouseDiff.removed
@@ -187,6 +194,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           })
         }
         onSubmit={handleSubmit}
+        allChannels={availableChannels}
         onWarehouseAdd={() => openModal("add-warehouse")}
         onWeightRateAdd={() => navigate(shippingWeightRatesUrl(id))}
         onWeightRateEdit={rateId =>
@@ -194,14 +202,12 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
-        warehouses={
-          searchWarehousesOpts.data?.search.edges.map(edge => edge.node) || []
-        }
-        hasMore={searchWarehousesOpts.data?.search.pageInfo.hasNextPage}
+        warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search) || []}
+        hasMore={searchWarehousesOpts.data?.search?.pageInfo?.hasNextPage}
         loading={searchWarehousesOpts.loading}
         onFetchMore={loadMore}
         onSearchChange={search}
-        selectedChannelId={channel.id}
+        selectedChannelId={channel?.id}
       />
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}
@@ -321,6 +327,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
             variables: {
               input: {
                 address: {
+                  companyName: data.companyName,
                   city: data.city,
                   cityArea: data.cityArea,
                   country: findValueInEnum(data.country, CountryCode),
@@ -330,7 +337,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
                   streetAddress1: data.streetAddress1,
                   streetAddress2: data.streetAddress2
                 },
-                companyName: data.companyName,
                 name: data.name
               }
             }

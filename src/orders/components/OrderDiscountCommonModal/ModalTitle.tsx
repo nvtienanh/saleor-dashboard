@@ -1,6 +1,7 @@
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import { Divider, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import CardSpacer from "@saleor/components/CardSpacer";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -19,16 +20,29 @@ const useStyles = makeStyles(
 interface ModalTitleProps {
   title: string;
   onClose: () => void;
+  withBorder?: boolean;
 }
 
-const ModalTitle: React.FC<ModalTitleProps> = ({ title, onClose }) => {
+const ModalTitle: React.FC<ModalTitleProps> = ({
+  title,
+  onClose,
+  withBorder = false
+}) => {
   const classes = useStyles({});
 
   return (
-    <div className={classes.container}>
-      <Typography variant="h5">{title}</Typography>
-      <CloseIcon onClick={onClose} />
-    </div>
+    <>
+      <div className={classes.container}>
+        <Typography variant="h5">{title}</Typography>
+        <CloseIcon onClick={onClose} />
+      </div>
+      {withBorder && (
+        <>
+          <CardSpacer />
+          <Divider />
+        </>
+      )}
+    </>
   );
 };
 
